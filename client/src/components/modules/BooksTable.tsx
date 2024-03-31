@@ -2,7 +2,6 @@ import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, Tab
 import axios from "axios"
 import { useEffect, useState } from "react"
 import useSWR from "swr"
-import BookItem from "../elements/BookItem"
 
 
 const fetcher = (url: string) => axios.get(url).then(res =>res.data)
@@ -14,21 +13,22 @@ interface IInputBook{
 }
 
 const BooksTable = () =>{
-    const { data, error } = useSWR('http://localhost:3001/books', fetcher)
+    const { data, error, mutate, isLoading, isValidating } = useSWR('http://localhost:3001/books', fetcher)
 
-    useEffect(()=>{
-        console.log(data)
-    }, [])
+    // useEffect(()=>{
+    //     console.log(data)
+    //     //console.log('Изменения', isLoading, isValidating)
+    // }, [])
 
     return (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
-                <TableCell>Dessert (100g serving)</TableCell>
-                <TableCell align="right">Calories</TableCell>
-                <TableCell align="right">Fat&nbsp;(g)</TableCell>
-                <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+                <TableCell>Title</TableCell>
+                <TableCell align="right">Author</TableCell>
+                <TableCell align="right">Genre</TableCell>
+                <TableCell align="right">Description</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

@@ -1,14 +1,14 @@
 import { Box, Button, FormControl, TextField } from "@mui/material"
 import axios from "axios";
-import { error } from "console";
 import { useFormik } from 'formik';
 import useSWR from "swr";
 
-// const fetcher = (url: string) => axios.post(url).then(res => res.data)
+// const event = new EventEmitter();
+
+const fetcher = (url: string) => axios.get(url).then(res=>res.data)
 
 const AddBookForm = () =>{
-
-    // const { data, error } = useSWR('http://localhost:3000/books', fetcher)
+    const {mutate} = useSWR('http://localhost:3001/books', fetcher)
 
     const addBook = (book: Book) =>{
         axios.post('http://localhost:3001/books',{
@@ -16,10 +16,12 @@ const AddBookForm = () =>{
         })
         .then(function (response) {
             console.log(response);
+            mutate()
+            // event.emit("data");
         })
     }
 
-    const validate = values =>{
+    const validate = (values: Book) =>{
         const errors = {}
         if(!values.title){
             errors.title = 'Enter the title'
@@ -49,7 +51,7 @@ const AddBookForm = () =>{
                 <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
                 <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
                 {/*TODO: Color: success  */}
-                <Button variant="contained" type="submit">Contained</Button> 
+                <Button variant="contained" type="submit">Add</Button> 
             </FormControl>
         </Box> 
     )

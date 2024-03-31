@@ -1,19 +1,20 @@
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import axios from "axios"
 import { useEffect } from "react"
 import useSWR from "swr"
 import BookItem from "../elements/BookItem"
 
 
-const fetcher = (url: string) => axios.get(url).then(res =>res.data)
-
 interface IInputBook{
     id: number
     book: Book
 }
 
+const fetcher = (url: string) => axios.get(url).then(res =>res.data)
+
+
 const BooksList = () =>{
-    const { data, error } = useSWR('http://localhost:3001/books', fetcher)
+    const { data, error, mutate, isValidating } = useSWR('http://localhost:3001/books', fetcher)
 
     useEffect(()=>{
         console.log(data)
@@ -23,6 +24,7 @@ const BooksList = () =>{
         axios.delete(`http://localhost:3001/books/${id}`)
         .then(function (response) {
             console.log(response);
+            mutate()
         })
     }
 
@@ -35,6 +37,9 @@ const BooksList = () =>{
                     </li>
                 ))}
             </ul>
+
+            <Button variant="contained" onClick={()=>mutate()}></Button>
+
         </Box> 
     )
 }
