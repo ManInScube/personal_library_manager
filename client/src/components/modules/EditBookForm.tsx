@@ -7,11 +7,11 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => axios.get(url).then(res=>res.data)
 
-const AddBookForm = () =>{
+const EditBookForm = () =>{
     const {mutate} = useSWR('http://localhost:3001/books', fetcher)
 
-    const addBook = (book: Book) =>{
-        axios.post('http://localhost:3001/books',{
+    const editBook = (book: Book) =>{
+        axios.put('http://localhost:3001/books',{
             book
         })
         .then(function (response) {
@@ -38,24 +38,13 @@ const AddBookForm = () =>{
         },
         validate,
         onSubmit: values => {
-            addBook(values);
+            editBook(values);
         },
       });
 
     
     
     return(
-    //    <Box sx={{display: 'flex'}}>
-    //         <FormControl component="form" onSubmit={formik.handleSubmit}>
-    //             <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled" onChange={formik.handleChange} value={formik.values.title}/>
-    //             <TextField id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
-    //             <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
-    //             <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
-    //             {/*TODO: Color: success  */}
-    //             <Button variant="contained" type="submit">Add</Button> 
-    //         </FormControl>
-    //     </Box> 
-
         <>
             <form action="submit" id="table-form" onSubmit={formik.handleSubmit}></form>
             <TableRow>
@@ -81,4 +70,4 @@ const AddBookForm = () =>{
     )
 }
 
-export default AddBookForm
+export default EditBookForm

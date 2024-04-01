@@ -8,8 +8,10 @@ import BooksTable from './components/modules/BooksTable'
 function App() {
   return (
     <>
-      <AddBookForm/>
+      {/* <BooksList/> */}
       <BooksTable/>
+      {/* <AddBookForm/> */}
+
     </>
   )
 }

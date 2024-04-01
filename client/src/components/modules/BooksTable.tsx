@@ -1,7 +1,10 @@
-import { Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
+import { Box, IconButton, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, TextField } from "@mui/material"
 import axios from "axios"
 import { useEffect, useState } from "react"
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import useSWR from "swr"
+import AddBookForm from "./AddBookForm";
 
 
 const fetcher = (url: string) => axios.get(url).then(res =>res.data)
@@ -15,16 +18,22 @@ interface IInputBook{
 const BooksTable = () =>{
     const { data, error, mutate, isLoading, isValidating } = useSWR('http://localhost:3001/books', fetcher)
 
-    // useEffect(()=>{
-    //     console.log(data)
-    //     //console.log('Изменения', isLoading, isValidating)
-    // }, [])
+    const [editMode, setEditMode] = useState<boolean>(false);
+
+    const deleteBook = (id: number) =>{
+        axios.delete(`http://localhost:3001/books/${id}`)
+        .then(function (response) {
+            console.log(response);
+            mutate()
+        })
+    }
 
     return (
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell></TableCell>
                 <TableCell>Title</TableCell>
                 <TableCell align="right">Author</TableCell>
                 <TableCell align="right">Genre</TableCell>
@@ -37,6 +46,11 @@ const BooksTable = () =>{
                   key={row.id}
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >
+                    <TableCell component="th" scope="row">
+                    <IconButton size="small" onClick={()=>deleteBook(row.id)}>
+                        <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
                   <TableCell component="th" scope="row">
                     {row.book.title}
                   </TableCell>
@@ -45,6 +59,7 @@ const BooksTable = () =>{
                   <TableCell align="right">{row.book.description}</TableCell>
                 </TableRow>
               ))}
+                <AddBookForm/>
             </TableBody>
           </Table>
         </TableContainer>
