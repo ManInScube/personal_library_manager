@@ -5,6 +5,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import useSWR from "swr"
 import AddBookForm from "./AddBookForm";
+import EditBookForm from "./EditBookForm";
+import BookTabelRow from "./BookTableRow";
 
 
 const fetcher = (url: string) => axios.get(url).then(res =>res.data)
@@ -18,7 +20,7 @@ interface IInputBook{
 const BooksTable = () =>{
     const { data, error, mutate, isLoading, isValidating } = useSWR('http://localhost:3001/books', fetcher)
 
-    const [editMode, setEditMode] = useState<boolean>(false);
+    // const [editMode, setEditMode] = useState<boolean>(false);
 
     const deleteBook = (id: number) =>{
         axios.delete(`http://localhost:3001/books/${id}`)
@@ -42,22 +44,27 @@ const BooksTable = () =>{
             </TableHead>
             <TableBody>
               {data&&data.map((row: IInputBook) => (
-                <TableRow
-                  key={row.id}
-                  sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                >
-                    <TableCell component="th" scope="row">
-                    <IconButton size="small" onClick={()=>deleteBook(row.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell component="th" scope="row">
-                    {row.book.title}
-                  </TableCell>
-                  <TableCell align="right">{row.book.author}</TableCell>
-                  <TableCell align="right">{row.book.genre}</TableCell>
-                  <TableCell align="right">{row.book.description}</TableCell>
-                </TableRow>
+                // !editMode
+                // ?
+                // <TableRow
+                //   key={row.id}
+                //   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                // >
+                //     <TableCell component="th" scope="row">
+                //     <IconButton size="small" onClick={()=>deleteBook(row.id)}>
+                //         <DeleteIcon />
+                //     </IconButton>
+                //   </TableCell>
+                //   <TableCell component="th" scope="row">
+                //     {row.book.title}
+                //   </TableCell>
+                //   <TableCell align="right">{row.book.author}</TableCell>
+                //   <TableCell align="right">{row.book.genre}</TableCell>
+                //   <TableCell align="right">{row.book.description}</TableCell>
+                // </TableRow>
+                // :
+                // <EditBookForm props={row.book}/>
+                <BookTabelRow key={row.id} props={row.book} handler={() => deleteBook(row.id)} id={row.id}/>
               ))}
                 <AddBookForm/>
             </TableBody>

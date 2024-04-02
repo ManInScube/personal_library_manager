@@ -5,20 +5,28 @@ import useSWR from "swr";
 
 // const event = new EventEmitter();
 
+interface IEditBookForm{
+    id: number
+    props: Book
+    handler: ()=>void
+    editHandler: (args: Book)=>void
+}
+
 const fetcher = (url: string) => axios.get(url).then(res=>res.data)
 
-const EditBookForm = () =>{
+const EditBookForm = ({id, props, editHandler, handler}: IEditBookForm) =>{
     const {mutate} = useSWR('http://localhost:3001/books', fetcher)
 
-    const editBook = (book: Book) =>{
-        axios.put('http://localhost:3001/books',{
-            book
-        })
-        .then(function (response) {
-            console.log(response);
-            mutate()
-        })
-    }
+    
+    // const editBook = (book: Book) =>{
+    //     axios.put(`http://localhost:3001/books/${id}`,{
+    //         book
+    //     })
+    //     .then(function (response) {
+    //         console.log(response)
+    //         mutate()
+    //     })
+    // }
 
     const validate = (values: Book) =>{
         const errors = {}
@@ -30,26 +38,20 @@ const EditBookForm = () =>{
     }
 
     const formik = useFormik({
-        initialValues: {
-          title: '',
-          author: '',
-          genre: '',
-          description: ''
-        },
+        initialValues: props,
         validate,
         onSubmit: values => {
-            editBook(values);
+            editHandler(values)
+            handler
         },
       });
-
-    
     
     return(
         <>
             <form action="submit" id="table-form" onSubmit={formik.handleSubmit}></form>
             <TableRow>
                 <TableCell>
-                        <Button variant="contained" form="table-form" type="submit">Add</Button> 
+                        <Button variant="contained" form="table-form" type="submit">Save</Button> 
                 </TableCell>
                 <TableCell>
                     <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled" onChange={formik.handleChange} value={formik.values.title}/>

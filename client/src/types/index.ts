@@ -6,7 +6,7 @@ type Book = {
 }
 
 interface IBookItemProps{
-    //id: number 
+    id: number 
     props: Book
     handler: ()=>void
 }
