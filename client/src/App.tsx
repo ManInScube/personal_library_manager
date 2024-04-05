@@ -1,17 +1,28 @@
+import { ThemeProvider } from '@emotion/react'
 import './App.css'
-import AddBookForm from './components/modules/AddBookForm'
-import BooksList from './components/modules/BooksList'
-import BooksTable from './components/modules/BooksTable'
+import BooksPage from './components/modules/BooksPage'
+import { CssBaseline, createTheme } from '@mui/material'
 
 
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark'
+  }
+})
+
+const lightTheme = createTheme({
+  palette: {
+    mode: 'light'
+  }
+})
 
 function App() {
   return (
     <>
-      {/* <BooksList/> */}
-      <BooksTable/>
-      {/* <AddBookForm/> */}
-
+      <ThemeProvider theme={lightTheme}>
+      <CssBaseline/>
+        <BooksPage/>
+      </ThemeProvider>
     </>
   )
 }

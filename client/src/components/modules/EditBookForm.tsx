@@ -1,35 +1,12 @@
-import { Box, Button, FormControl, TableCell, TableRow, TextField } from "@mui/material"
-import axios from "axios";
+import { Button, TableCell, TableRow, TextField } from "@mui/material"
 import { useFormik } from 'formik';
-import useSWR from "swr";
+import { Book, ErrorType, IEditBookForm } from "../../types";
 
-// const event = new EventEmitter();
-
-interface IEditBookForm{
-    id: number
-    props: Book
-    handler: ()=>void
-    editHandler: (args: Book)=>void
-}
-
-const fetcher = (url: string) => axios.get(url).then(res=>res.data)
 
 const EditBookForm = ({id, props, editHandler, handler}: IEditBookForm) =>{
-    const {mutate} = useSWR('http://localhost:3001/books', fetcher)
-
-    
-    // const editBook = (book: Book) =>{
-    //     axios.put(`http://localhost:3001/books/${id}`,{
-    //         book
-    //     })
-    //     .then(function (response) {
-    //         console.log(response)
-    //         mutate()
-    //     })
-    // }
 
     const validate = (values: Book) =>{
-        const errors = {}
+        const errors: ErrorType = {}
         if(!values.title){
             errors.title = 'Enter the title'
         }
