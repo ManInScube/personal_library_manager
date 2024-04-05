@@ -1,16 +1,10 @@
-import { IconButton, TableCell, TableRow, useMediaQuery } from "@mui/material";
 import { useState } from "react";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
 import EditBookForm from "./EditBookForm";
 import axios from "axios";
 import useSWR from "swr";
 import { Book, IBookItemProps } from "../../types";
 import BookRowDesktop from "../elements/BookRowDesktop";
-import BookRowMobile from "../elements/BookRowMobile";
-
-
-const fetcher = (url: string) => axios.get(url).then(res=>res.data)
+import { fetcher } from "../../api";
 
 const BookTabelRow = ({id,props, handler} : IBookItemProps) =>{
     const [editMode, setEditMode] = useState<boolean>(false);
@@ -21,7 +15,7 @@ const BookTabelRow = ({id,props, handler} : IBookItemProps) =>{
     }
 
     const editModeOff = () =>{
-            setEditMode(false)
+        setEditMode(false)
     }
 
     const editBook = (book: Book) =>{
@@ -43,7 +37,7 @@ const BookTabelRow = ({id,props, handler} : IBookItemProps) =>{
                 ?
                 <BookRowDesktop props={props} handler={handler} editHandler={editModeOn} id={id}/>
                 :
-                <EditBookForm props={props} handler={editModeOff} id={id} editHandler={editBook}/>
+                <EditBookForm props={props} editModeHandler={editModeOff} id={id} editHandler={editBook}/>
             }
         </>
     )

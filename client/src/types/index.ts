@@ -17,12 +17,12 @@ export interface IInputBook{
 export interface IBookItemProps{
     id: number 
     props: Book
-    handler: ()=>void
+    handler: (id: number)=>void
 }
 
 export interface IEditBookForm{
     id: number
     props: Book
-    handler: ()=>void
+    editModeHandler: ()=>void
     editHandler: (args: Book)=>void
 }

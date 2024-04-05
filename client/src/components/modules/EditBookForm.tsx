@@ -1,16 +1,17 @@
-import { Button, TableCell, TableRow, TextField } from "@mui/material"
+import { Button, ListItem, TableCell, TableRow, TextField, useMediaQuery } from "@mui/material"
 import { useFormik } from 'formik';
 import { Book, ErrorType, IEditBookForm } from "../../types";
 
 
-const EditBookForm = ({id, props, editHandler, handler}: IEditBookForm) =>{
+const EditBookForm = ({id, props, editHandler, editModeHandler}: IEditBookForm) =>{
+
+    const mobile = useMediaQuery('(max-width:600px)');
 
     const validate = (values: Book) =>{
         const errors: ErrorType = {}
         if(!values.title){
             errors.title = 'Enter the title'
         }
-
         return errors
     }
 
@@ -19,14 +20,17 @@ const EditBookForm = ({id, props, editHandler, handler}: IEditBookForm) =>{
         validate,
         onSubmit: values => {
             editHandler(values)
-            handler
+            editModeHandler
         },
       });
     
     return(
         <>
             <form action="submit" id="table-form" onSubmit={formik.handleSubmit}></form>
-            <TableRow>
+            {
+                !mobile
+                ?
+                <TableRow>
                 <TableCell>
                         <Button variant="contained" form="table-form" type="submit">Save</Button> 
                 </TableCell>
@@ -42,8 +46,16 @@ const EditBookForm = ({id, props, editHandler, handler}: IEditBookForm) =>{
                 <TableCell>
                 <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
                 </TableCell>
-            </TableRow>   
-            
+                </TableRow>   
+                :
+                <ListItem sx={{display: 'flex', flexDirection:'column'}}>
+                    <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled"  onChange={formik.handleChange} value={formik.values.title}/>
+                    <TextField id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
+                    <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
+                    <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
+                    <Button variant="contained" form="table-form" type="submit">Save</Button> 
+                </ListItem>
+            }
         </>
              
     )
