@@ -4,8 +4,8 @@ import { useFormik } from 'formik';
 import useSWR from "swr";
 import { Book, ErrorType } from "../../types";
 import React from "react";
+import { fetcher } from "../../api";
 
-const fetcher = (url: string) => axios.get(url).then(res=>res.data)
 
 interface IAddBookForm{
     formRef: React.ForwardedRef<HTMLElement>

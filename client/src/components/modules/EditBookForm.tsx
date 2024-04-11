@@ -1,9 +1,13 @@
 import { Button, ListItem, TableCell, TableRow, TextField, useMediaQuery } from "@mui/material"
 import { useFormik } from 'formik';
 import { Book, ErrorType, IEditBookForm } from "../../types";
+import axios from "axios";
+import useSWR, { mutate } from "swr";
+import { fetcher } from "../../api";
 
 
 const EditBookForm = ({id, props, editHandler, editModeHandler}: IEditBookForm) =>{
+    const { mutate } = useSWR('http://localhost:3001/books', fetcher)
 
     const mobile = useMediaQuery('(max-width:600px)');
 
@@ -19,10 +23,12 @@ const EditBookForm = ({id, props, editHandler, editModeHandler}: IEditBookForm) 
         initialValues: props,
         validate,
         onSubmit: values => {
+            //editHandler(values, id)
             editHandler(values)
-            editModeHandler
+            // editModeHandler
         },
       });
+
     
     return(
         <>
@@ -31,21 +37,21 @@ const EditBookForm = ({id, props, editHandler, editModeHandler}: IEditBookForm) 
                 !mobile
                 ?
                 <TableRow>
-                <TableCell>
-                        <Button variant="contained" form="table-form" type="submit">Save</Button> 
-                </TableCell>
-                <TableCell>
-                    <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled" onChange={formik.handleChange} value={formik.values.title}/>
-                </TableCell>
-                <TableCell>
-                <TextField id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
-                </TableCell>
-                <TableCell>
-                <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
-                </TableCell>
-                <TableCell>
-                <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
-                </TableCell>
+                    <TableCell>
+                            <Button variant="contained" form="table-form" type="submit">Save</Button> 
+                    </TableCell>
+                    <TableCell>
+                        <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled" onChange={formik.handleChange} value={formik.values.title}/>
+                    </TableCell>
+                    <TableCell>
+                    <TextField id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
+                    </TableCell>
+                    <TableCell>
+                    <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
+                    </TableCell>
+                    <TableCell>
+                    <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
+                    </TableCell>
                 </TableRow>   
                 :
                 <ListItem sx={{display: 'flex', flexDirection:'column'}}>

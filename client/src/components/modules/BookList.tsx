@@ -14,13 +14,13 @@ interface IBooksList{
 const BooksList = ({props, formRef}: IBooksList) =>{
     const { mutate } = useSWR('http://localhost:3001/books', fetcher)
 
-    const deleteBook = (id: number) =>{
-        axios.delete(`http://localhost:3001/books/${id}`)
-        .then(function (response) {
-            console.log(response);
-            mutate()
-        })
-    }
+    // const deleteBook = (id: number) =>{
+    //     axios.delete(`http://localhost:3001/books/${id}`)
+    //     .then(function (response) {
+    //         console.log(response);
+    //         mutate()
+    //     })
+    // }
     return (
         <List sx={{overflow: 'auto', maxHeight: '90vh'}}>
             {props.map((item: IInputBook)=>(

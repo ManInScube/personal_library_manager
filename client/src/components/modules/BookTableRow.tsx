@@ -1,48 +1,35 @@
-import { useState } from "react";
 import EditBookForm from "./EditBookForm";
-import axios from "axios";
-import useSWR from "swr";
-import { Book, IBookItemProps } from "../../types";
+//import { IBookItemProps } from "../../types";
 import BookRowDesktop from "../elements/BookRowDesktop";
-import { fetcher } from "../../api";
+import { Book } from "../../types";
+import useEdit from "../../hooks/useEdit";
 
-const BookTabelRow = ({id,props, handler} : IBookItemProps) =>{
-    const [editMode, setEditMode] = useState<boolean>(false);
-    const {mutate} = useSWR('http://localhost:3001/books', fetcher)
+export interface IBookItemProps{
+    id: number 
+    props: Book
+    editMode?: boolean
+    editModeHandler: ()=>void
+    deleteHandler: (id:number)=>void
+    editHandler: (props: Book, id: number )=>void
+}
 
-    const editModeOn = () =>{
-        setEditMode(true)
-    }
+const BookTableRow = ({id,props, editModeHandler, deleteHandler, editHandler} : IBookItemProps) =>{
 
-    const editModeOff = () =>{
-        setEditMode(false)
-    }
-
-    const editBook = (book: Book) =>{
-        axios.put(`http://localhost:3001/books/${id}`,{
-            book
-        })
-        .then(function (response) {
-            console.log(response)
-            mutate()
-            setEditMode(false)
-
-        })
-    }
+    const {editMode, enterEditMode, exitEditMode, editBook} = useEdit(id)
 
     return(
         <>
             {        
                 !editMode
                 ?
-                <BookRowDesktop props={props} handler={handler} editHandler={editModeOn} id={id}/>
+                <BookRowDesktop props={props} deleteHandler={deleteHandler} editHandler={enterEditMode} id={id}/>
                 :
-                <EditBookForm props={props} editModeHandler={editModeOff} id={id} editHandler={editBook}/>
+                <EditBookForm props={props} editModeHandler={exitEditMode} id={id} editHandler={editBook}/>
             }
         </>
     )
 } 
 
-export default BookTabelRow
+export default BookTableRow
 
 
