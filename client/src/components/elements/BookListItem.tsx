@@ -1,36 +1,17 @@
 import { Box, Divider, IconButton, ListItem, ListItemText, Typography } from "@mui/material"
-import React, { useState } from "react"
-import { Book, IBookItemProps } from "../../types"
+import React from "react"
+import { IBookItemProps } from "../../types"
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import EditBookForm from "../modules/EditBookForm";
-import axios from "axios";
-import useSWR from "swr";
-import { fetcher } from "../../api";
+import useEdit from "../../hooks/useEdit";
+
 
 
 const BooksListItem = ({id, props, handler}: IBookItemProps) =>{
-    const [editMode, setEditMode] = useState<boolean>(false);
-    const {mutate} = useSWR('http://localhost:3001/books', fetcher)
 
-    const editModeOn = () =>{
-        setEditMode(true)
-    }
+    const {editMode, enterEditMode, exitEditMode, editBook} = useEdit(id)
 
-    const editModeOff = () =>{
-        setEditMode(false)
-    }
-
-    const editBook = (book: Book) =>{
-        axios.put(`http://localhost:3001/books/${id}`,{
-            book
-        })
-        .then(function (response) {
-            console.log(response)
-            mutate()
-            setEditMode(false)
-        })
-    }
 
     return(
         <>
@@ -76,13 +57,13 @@ const BooksListItem = ({id, props, handler}: IBookItemProps) =>{
                 <IconButton size="small" onClick={handler}>
                 <DeleteIcon />
             </IconButton>
-            <IconButton size="small" onClick={editModeOn}>
+            <IconButton size="small" onClick={enterEditMode}>
                 <EditIcon />
             </IconButton>
             </Box>
             </ListItem>
             :
-            <EditBookForm props={props} editModeHandler={editModeOff} id={id} editHandler={editBook}/>
+            <EditBookForm props={props} editModeHandler={exitEditMode} id={id} editHandler={editBook}/>
         }
             <Divider component="li" />
         </>

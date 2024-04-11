@@ -1,5 +1,4 @@
 import EditBookForm from "./EditBookForm";
-//import { IBookItemProps } from "../../types";
 import BookRowDesktop from "../elements/BookRowDesktop";
 import { Book } from "../../types";
 import useEdit from "../../hooks/useEdit";
@@ -7,13 +6,10 @@ import useEdit from "../../hooks/useEdit";
 export interface IBookItemProps{
     id: number 
     props: Book
-    editMode?: boolean
-    editModeHandler: ()=>void
     deleteHandler: (id:number)=>void
-    editHandler: (props: Book, id: number )=>void
 }
 
-const BookTableRow = ({id,props, editModeHandler, deleteHandler, editHandler} : IBookItemProps) =>{
+const BookTableRow = ({id,props, deleteHandler} : IBookItemProps) =>{
 
     const {editMode, enterEditMode, exitEditMode, editBook} = useEdit(id)
 

@@ -1,32 +1,18 @@
-import { Button, Grid, List, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow, useMediaQuery } from "@mui/material"
-import axios from "axios"
-import useSWR from "swr"
+import {Paper, Table, TableBody, TableCell, TableContainer, TableHead, TablePagination, TableRow } from "@mui/material"
 import AddBookForm from "./AddBookForm";
 import BookTableRow from "./BookTableRow";
-import { Book, IBooksViewVariant, IInputBook } from "../../types";
-import {useEffect, useState } from "react";
-import { fetcher } from "../../api";
-
-// interface IBooksList{
-//     props:IInputBook[]
-//     formRef: React.ForwardedRef<HTMLElement>
-//     editHandler: (book: Book, id: number)=>void
-// }
+import {IBooksViewVariant, IInputBook } from "../../types";
+import {useState } from "react";
 
 
 
-const BooksTable = ({data, deleteBook, editBook, editMode, editModeOn, editModeOff, formRef}: IBooksViewVariant) =>{
+
+const BooksTable = ({data, deleteBook, formRef}: IBooksViewVariant) =>{
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
 
-    const { mutate } = useSWR('http://localhost:3001/books', fetcher)
-
-    useEffect(()=>{
-        console.log(data)
-    },[])
-
     const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
+        setPage(newPage)
     };
     
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +38,7 @@ const BooksTable = ({data, deleteBook, editBook, editMode, editModeOn, editModeO
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row: IInputBook) => {
                         return(
-                            <BookTableRow key={row.id} props={row.book} deleteHandler={() => deleteBook(row.id)} editModeHandler={editModeOn} editMode={editMode} id={row.id} editHandler={editBook}/>
+                            <BookTableRow key={row.id} props={row.book} deleteHandler={() => deleteBook(row.id)}  id={row.id} />
                         )
                         })}
                         <AddBookForm formRef={formRef}/>

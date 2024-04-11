@@ -32,9 +32,5 @@ export interface IEditBookForm{
 export interface IBooksViewVariant{
     data: IInputBook[]
     deleteBook: (arg:number)=>Function
-    editBook:(args)=>Function
-    editMode: boolean
-    editModeOn: ()=>Function
-    editModeOff: ()=>Function
     formRef: React.ForwardedRef<HTMLElement>
 }
