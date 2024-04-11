@@ -6,12 +6,12 @@
 No styles were required, just functionality.
 
 ## Install Dependencies
-1. Go to SERVER folder -> ```console npm i```
-2. Go to CLIENT folder -> ```console npm i```
+1. Go to SERVER folder -> ```npm i```
+2. Go to CLIENT folder -> ```npm i```
 
 ## Start the project
-1. Go to SERVER folder -> ```console npm start```
-2. Go to CLIENT folder -> ```console npm run dev```
+1. Go to SERVER folder -> ```npm start```
+2. Go to CLIENT folder -> ```npm run dev```
 
 ## Enjoy
 1. You can add books
