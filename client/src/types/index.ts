@@ -14,14 +14,6 @@ export interface IInputBook{
     book: Book
 }
 
-export interface IBookItemProps{
-    id: number 
-    props: Book
-    editMode?: boolean
-    deleteHandler: ()=>void
-    editHandler: ()=>void
-}
-
 export interface IEditBookForm{
     id: number
     props: Book
@@ -33,4 +25,10 @@ export interface IBooksViewVariant{
     data: IInputBook[]
     deleteBook: (arg:number)=>Function
     formRef: React.ForwardedRef<HTMLElement>
+}
+
+export interface IBookItemProps{
+    id: number 
+    props: Book
+    deleteHandler: (id:number)=>void
 }

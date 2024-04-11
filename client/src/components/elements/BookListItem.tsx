@@ -12,7 +12,6 @@ const BooksListItem = ({id, props, handler}: IBookItemProps) =>{
 
     const {editMode, enterEditMode, exitEditMode, editBook} = useEdit(id)
 
-
     return(
         <>
         {

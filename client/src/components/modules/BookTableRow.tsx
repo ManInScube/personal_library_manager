@@ -1,13 +1,9 @@
 import EditBookForm from "./EditBookForm";
 import BookRowDesktop from "../elements/BookRowDesktop";
-import { Book } from "../../types";
+import { IBookItemProps } from "../../types";
 import useEdit from "../../hooks/useEdit";
 
-export interface IBookItemProps{
-    id: number 
-    props: Book
-    deleteHandler: (id:number)=>void
-}
+
 
 const BookTableRow = ({id,props, deleteHandler} : IBookItemProps) =>{
 

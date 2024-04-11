@@ -1,7 +1,6 @@
 import { useMediaQuery } from "@mui/material";
 import { IBooksViewVariant } from "../../types";
 
-
 interface IBooksView{
     Desktop: React.ComponentType<T>
     Mobile: React.ComponentType<T>

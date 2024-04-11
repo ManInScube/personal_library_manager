@@ -73,11 +73,11 @@ const AddBookForm = ({formRef}:IAddBookForm) =>{
                 </TableRow>   
                 :
                 <ListItem sx={{display: 'flex', flexDirection:'column'}}>
-                    <TextField error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled"  onChange={formik.handleChange} value={formik.values.title}/>
-                    <TextField id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
-                    <TextField id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
-                    <TextField id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
-                    <Button ref={formRef} variant="contained" form="table-form" type="submit">Add</Button> 
+                    <TextField sx={{width:'100%', marginTop:1}} error={Boolean(formik.errors.title)} id="title" label="Title" helperText={formik.errors.title} variant="filled"  onChange={formik.handleChange} value={formik.values.title}/>
+                    <TextField sx={{width:'100%', marginTop:1}} id="author" label="Author" variant="filled" onChange={formik.handleChange} value={formik.values.author}/>
+                    <TextField sx={{width:'100%', marginTop:1}} id="genre" label="Genre" variant="filled" onChange={formik.handleChange} value={formik.values.genre}/>
+                    <TextField sx={{width:'100%', marginTop:1}} id="description" label="Description" variant="filled" onChange={formik.handleChange} value={formik.values.description}/>
+                    <Button sx={{width:'100%', marginTop:2}} ref={formRef} variant="contained" form="table-form" type="submit">Add</Button> 
                 </ListItem>
 
             }

@@ -1,15 +1,7 @@
 import { IconButton, TableCell, TableRow } from "@mui/material"
-
-//import { IBookItemProps } from "../../types";
-import { useState } from "react";
-import BookOptions from "./BookOptions";
 import { Book } from "../../types";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-
-// interface IBookRowMobileProps extends IBookItemProps{
-//     editHandler: ()=>void
-// }
 
 interface IBookRowMobileProps{
     props: Book
